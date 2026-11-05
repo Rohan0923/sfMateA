@@ -1,0 +1,6 @@
+# Xcode: per-person settings and build output
+xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
+.DS_Store
