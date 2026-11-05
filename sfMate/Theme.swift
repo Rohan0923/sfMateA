@@ -86,11 +86,11 @@ struct NoticeText: View {
 struct KnightAvatar: View {
     var size: CGFloat = 30
     var body: some View {
-        Image("Knight")
+        Image("Knight")   // already cut to a circle, so it fills the ring edge to edge
             .resizable().scaledToFit()
-            .padding(size * 0.1)
             .frame(width: size, height: size)
             .background(.white, in: Circle())
+            .clipShape(Circle())
             .overlay(Circle().stroke(Color.sfGold, lineWidth: size > 60 ? 2 : 1.5))
             .accessibilityLabel("sfMate")
     }
