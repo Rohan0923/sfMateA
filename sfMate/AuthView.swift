@@ -88,12 +88,16 @@ struct AuthView: View {
                     .focused($focus, equals: .username).submitLabel(.next).onSubmit { focus = .email }
                     .sfField(focused: focus == .username)
             }
-            labeled("School email") {
-                TextField("you@sfhs.com", text: $email)
-                    .textContentType(.emailAddress).keyboardType(.emailAddress)
-                    .textInputAutocapitalization(.never).autocorrectionDisabled()
-                    .focused($focus, equals: .email).submitLabel(.next).onSubmit { focus = .signupPassword }
-                    .sfField(focused: focus == .email)
+            VStack(alignment: .leading, spacing: 6) {
+                labeled("Email") {
+                    TextField("you@example.com", text: $email)
+                        .textContentType(.emailAddress).keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .focused($focus, equals: .email).submitLabel(.next).onSubmit { focus = .signupPassword }
+                        .sfField(focused: focus == .email)
+                }
+                Text("Use your @sfhs.com school email to also get the Daily Announcements.")
+                    .font(.system(size: 12.5)).foregroundStyle(Color.sfMuted).lineSpacing(2)
             }
             labeled("Password") {
                 SecureField("At least 8 characters", text: $password)

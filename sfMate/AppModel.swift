@@ -21,6 +21,9 @@ final class AppModel {
     /// The student agreed to questions (and profile details) being sent to the AI provider. Apple requires asking.
     var hasAIConsent: Bool { me?.ai_consent == true }
 
+    /// An @sfhs.com account. The Daily Announcements are the one source that isn't public, so only these accounts get them.
+    var isSchoolMember: Bool { me?.school_member == true }
+
     /// Where a signed-in student belongs: setup first, then the AI consent screen, then the chat.
     private func home(setupDone: Bool? = nil) -> Screen {
         guard setupDone ?? (me?.setup_done == true) else { return .setup }

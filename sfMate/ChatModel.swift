@@ -167,6 +167,7 @@ final class ChatModel {
 
     // ---------- Daily Announcements ----------
     func checkAnnouncements(app: AppModel) async {
+        guard app.isSchoolMember else { return }   // the Daily Announcements are for @sfhs.com accounts only
         do {
             let status: AnnouncementStatus = try await API.shared.send("announcements/status", timeout: 20)
             guard status.available, let id = status.id, id != shownAnnouncementID else { return }

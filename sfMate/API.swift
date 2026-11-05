@@ -32,6 +32,7 @@ struct Me: Decodable {
     let setup_done: Bool
     let profile: Profile?
     let ai_consent: Bool?    // agreed to questions being sent to the AI provider (POST /consent)
+    let school_member: Bool? // signed up with an @sfhs.com email: also gets the Daily Announcements (nobody else does)
 }
 
 struct PendingSignup: Decodable {

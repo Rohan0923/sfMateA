@@ -11,12 +11,13 @@ struct ChatView: View {
     @State private var deleteError: String?
     @FocusState private var typing: Bool
 
-    static let suggestions = [
-        "When is the next liturgy?",
-        "Announcement summary",
-        "What's on the menu?",
-        "Upcoming events this week?",
-    ]
+    /// The Daily Announcements are for @sfhs.com accounts only, so everyone else gets a different suggestion there.
+    private var suggestions: [String] {
+        ["When is the next liturgy?",
+         app.isSchoolMember ? "Announcement summary" : "What's the dress code?",
+         "What's on the menu?",
+         "Upcoming events this week?"]
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -156,11 +157,12 @@ struct ChatView: View {
                     .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sfBorder, lineWidth: 1))
                     .padding(.vertical, 10)
             }
-            Text("Ask me about announcements, the calendar, lunch, clubs, classes, or school rules.")
+            Text(app.isSchoolMember ? "Ask me about announcements, the calendar, lunch, clubs, classes, or school rules."
+                                    : "Ask me about the calendar, lunch, clubs, classes, or school rules.")
                 .font(.system(size: 15)).foregroundStyle(Color.sfMuted).multilineTextAlignment(.center)
                 .padding(.top, 4).padding(.bottom, 22)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)], spacing: 10) {
-                ForEach(Self.suggestions, id: \.self) { suggestion in
+                ForEach(suggestions, id: \.self) { suggestion in
                     Button { chat.send(suggestion, app: app) } label: {
                         Text(suggestion)
                             .font(.system(size: 14)).foregroundStyle(Color.sfText).multilineTextAlignment(.leading)

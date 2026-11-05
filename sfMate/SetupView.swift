@@ -88,7 +88,7 @@ struct SetupView: View {
                         hint("(Optional)")
                     }
 
-                    announcementPreferences
+                    if app.isSchoolMember { announcementPreferences }   // the Daily Announcements are for school accounts only
 
                     reminderSwitches
 
@@ -265,7 +265,7 @@ struct SetupView: View {
         let profile = Profile(first_name: firstName.trimmingCharacters(in: .whitespaces), grade: grade,
                               hobbies: hobbies.trimmingCharacters(in: .whitespacesAndNewlines),
                               favorite_food: food.trimmingCharacters(in: .whitespaces),
-                              announcements: Self.topics.map(\.key).filter(chosen.contains))
+                              announcements: app.isSchoolMember ? Self.topics.map(\.key).filter(chosen.contains) : nil)
         Task {
             do { try await app.saveProfile(profile) } catch {
                 app.handle(error)
